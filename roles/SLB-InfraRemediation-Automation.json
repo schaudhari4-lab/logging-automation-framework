@@ -1,0 +1,39 @@
+{
+  "properties": {
+    "roleName": "SLB-InfraRemediation-Automation",
+    "description": "Unified role for automation account to enable diagnostics and configure storage firewall and service endpoints.",
+    "assignableScopes": [
+      "/subscriptions/<sub-id>",
+      "/providers/Microsoft.Management/managementGroups/<mg-id>"
+    ],
+    "permissions": [
+      {
+        "actions": [
+          "Microsoft.Insights/diagnosticSettings/read",
+          "Microsoft.Insights/diagnosticSettings/write",
+          "Microsoft.Sql/servers/read",
+          "Microsoft.DocumentDB/databaseAccounts/read",
+          "Microsoft.DBforPostgreSQL/servers/read",
+          "Microsoft.DBforMySQL/servers/read",
+          "Microsoft.Storage/storageAccounts/read",
+          "Microsoft.Storage/storageAccounts/write",
+          "Microsoft.Storage/storageAccounts/blobServices/containers/read",
+          "Microsoft.Storage/storageAccounts/blobServices/containers/write",
+          "Microsoft.Storage/storageAccounts/managementPolicies/write",
+          "Microsoft.Network/virtualNetworks/read",
+          "Microsoft.Network/virtualNetworks/write",
+          "Microsoft.Network/virtualNetworks/subnets/read",
+          "Microsoft.Network/virtualNetworks/subnets/write",
+          "Microsoft.Network/virtualNetworks/subnets/join/action",
+          "Microsoft.PolicyInsights/policyStates/queryResults/read",
+          "Microsoft.Resources/subscriptions/resourceGroups/read",
+          "Microsoft.Resources/subscriptions/resourceGroups/resources/read",
+          "Microsoft.Resources/deployments/*"
+        ],
+        "notActions": [],
+        "dataActions": [],
+        "notDataActions": []
+      }
+    ]
+  }
+}

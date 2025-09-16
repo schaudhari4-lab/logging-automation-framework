@@ -1,0 +1,46 @@
+{
+  "properties": {
+    "displayName": "CS-Blob-Security-Log-Aggregation",
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "version": "1.0.0",
+      "createdBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "createdOn": "2025-08-06T09:33:29.1373852Z",
+      "updatedBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "updatedOn": "2025-08-20T08:40:22.5629331Z"
+    },
+    "version": "1.0.0",
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Storage/storageAccounts/blobServices"
+      },
+      "then": {
+        "effect": "AuditIfNotExists",
+        "details": {
+          "type": "Microsoft.Insights/diagnosticSettings",
+          "existenceCondition": {
+            "field": "name",
+            "equals": "CS-blobdiag"
+          }
+        }
+      }
+    },
+    "versions": [
+      "1.0.0"
+    ]
+  },
+  "id": "/subscriptions/391c8a4e-5460-4de0-947c-c60eb3dd48ef/providers/Microsoft.Authorization/policyDefinitions/7ced553c-4726-43d9-8a29-709be6cecb17",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "7ced553c-4726-43d9-8a29-709be6cecb17",
+  "systemData": {
+    "createdBy": "adm-SChaudhari4@slb.com",
+    "createdByType": "User",
+    "createdAt": "2025-08-06T09:33:29.0474259Z",
+    "lastModifiedBy": "adm-SChaudhari4@slb.com",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2025-08-20T08:40:22.5231308Z"
+  }
+}

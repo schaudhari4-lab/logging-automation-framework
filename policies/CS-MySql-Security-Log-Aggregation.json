@@ -1,0 +1,54 @@
+{
+  "properties": {
+    "displayName": "CS-MySql-Security-Log-Aggregation",
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "version": "1.0.1",
+      "createdBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "createdOn": "2025-08-20T09:22:00.0103517Z",
+      "updatedBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "updatedOn": "2025-08-20T10:08:52.8720184Z"
+    },
+    "version": "1.0.0",
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "anyOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.DBforMySQL/servers"
+          },
+          {
+            "field": "type",
+            "equals": "Microsoft.DBforMySQL/flexibleServers"
+          }
+        ]
+      },
+      "then": {
+        "effect": "AuditIfNotExists",
+        "details": {
+          "type": "Microsoft.Insights/diagnosticSettings",
+          "existenceCondition": {
+            "field": "name",
+            "equals": "CS-mysqldiag"
+          }
+        }
+      }
+    },
+    "versions": [
+      "1.0.0"
+    ]
+  },
+  "id": "/subscriptions/391c8a4e-5460-4de0-947c-c60eb3dd48ef/providers/Microsoft.Authorization/policyDefinitions/95914b83-dd45-4cfc-b761-8db7fc57ff26",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "95914b83-dd45-4cfc-b761-8db7fc57ff26",
+  "systemData": {
+    "createdBy": "adm-SChaudhari4@slb.com",
+    "createdByType": "User",
+    "createdAt": "2025-08-20T09:21:59.9264531Z",
+    "lastModifiedBy": "adm-SChaudhari4@slb.com",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2025-08-20T10:08:52.8243475Z"
+  }
+}

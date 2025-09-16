@@ -1,0 +1,54 @@
+{
+  "properties": {
+    "displayName": "CS-SQLdb-Security-Log-Aggregation",
+    "policyType": "Custom",
+    "mode": "All",
+    "metadata": {
+      "version": "1.0.0",
+      "createdBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "createdOn": "2025-08-07T10:32:16.7750336Z",
+      "updatedBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "updatedOn": "2025-08-20T08:36:45.7189248Z"
+    },
+    "version": "1.0.0",
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Sql/servers/databases"
+          },
+          {
+            "field": "name",
+            "notEquals": "master"
+          }
+        ]
+      },
+      "then": {
+        "effect": "AuditIfNotExists",
+        "details": {
+          "type": "Microsoft.Insights/diagnosticSettings",
+          "existenceCondition": {
+            "field": "name",
+            "equals": "CS-sqldiag"
+          }
+        }
+      }
+    },
+    "versions": [
+      "1.0.0"
+    ]
+  },
+  "id": "/subscriptions/391c8a4e-5460-4de0-947c-c60eb3dd48ef/providers/Microsoft.Authorization/policyDefinitions/54d3a201-a3ae-4e5d-9062-2c78922dbb62",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "54d3a201-a3ae-4e5d-9062-2c78922dbb62",
+  "systemData": {
+    "createdBy": "adm-SChaudhari4@slb.com",
+    "createdByType": "User",
+    "createdAt": "2025-08-07T10:32:16.7231418Z",
+    "lastModifiedBy": "adm-SChaudhari4@slb.com",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2025-08-20T08:36:45.6584673Z"
+  }
+}

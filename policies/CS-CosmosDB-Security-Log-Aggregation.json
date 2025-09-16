@@ -1,0 +1,46 @@
+{
+  "properties": {
+    "displayName": "CS-CosmosDB-Security-Log-Aggregation",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "metadata": {
+      "version": "1.0.0",
+      "createdBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "createdOn": "2025-08-11T11:53:12.5387326Z",
+      "updatedBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "updatedOn": "2025-08-12T11:03:16.807237Z"
+    },
+    "version": "1.0.0",
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.DocumentDB/databaseAccounts"
+      },
+      "then": {
+        "effect": "auditIfNotExists",
+        "details": {
+          "type": "Microsoft.Insights/diagnosticSettings",
+          "existenceCondition": {
+            "field": "name",
+            "equals": "CS-cosmosqldiag"
+          }
+        }
+      }
+    },
+    "versions": [
+      "1.0.0"
+    ]
+  },
+  "id": "/subscriptions/391c8a4e-5460-4de0-947c-c60eb3dd48ef/providers/Microsoft.Authorization/policyDefinitions/e7306834-0ff4-4fe4-8074-c25859e41afa",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "e7306834-0ff4-4fe4-8074-c25859e41afa",
+  "systemData": {
+    "createdBy": "adm-SChaudhari4@slb.com",
+    "createdByType": "User",
+    "createdAt": "2025-08-11T11:53:12.5152421Z",
+    "lastModifiedBy": "adm-SChaudhari4@slb.com",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2025-08-12T11:03:16.7885972Z"
+  }
+}

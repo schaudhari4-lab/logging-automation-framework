@@ -1,0 +1,142 @@
+{
+  "properties": {
+    "displayName": "8274-RG-CSOC-LOGGING-AUDIT",
+    "policyType": "Custom",
+    "mode": "All",
+    "description": "",
+    "metadata": {
+      "category": "",
+      "createdBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "createdOn": "2025-07-04T11:56:16.8565232Z",
+      "updatedBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "updatedOn": "2025-09-10T17:39:41.3570879Z"
+    },
+    "version": "1.0.0",
+    "parameters": {
+      "resourceGroupName": {
+        "type": "String",
+        "metadata": {
+          "displayName": "RG Name name should be RG-CSOC-LOGGING",
+          "description": "RG Name name should be RG-CSOC-LOGGING"
+        },
+        "defaultValue": "RG-CSOC-LOGGING"
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "type",
+        "equals": "Microsoft.Resources/subscriptions"
+      },
+      "then": {
+        "effect": "DeployIfNotExists",
+        "details": {
+          "type": "Microsoft.Resources/resourceGroups",
+          "existenceCondition": {
+            "field": "name",
+            "equals": "[parameters('resourceGroupName')]"
+          },
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+          ],
+          "deploymentScope": "subscription",
+          "deployment": {
+            "location": "westeurope",
+            "properties": {
+              "mode": "incremental",
+              "parameters": {
+                "resourceGroupName": {
+                  "value": "[parameters('resourceGroupName')]"
+                },
+                "location": {
+                  "value": "westeurope"
+                }
+              },
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "resourceGroupName": {
+                    "type": "String"
+                  },
+                  "location": {
+                    "type": "String"
+                  }
+                },
+                "resources": [
+                  {
+                    "type": "Microsoft.Resources/resourceGroups",
+                    "apiVersion": "2021-04-01",
+                    "name": "[parameters('resourceGroupName')]",
+                    "location": "[parameters('location')]"
+                  },
+                  {
+                    "type": "Microsoft.Resources/deployments",
+                    "apiVersion": "2021-04-01",
+                    "name": "nested-storage-deployment",
+                    "resourceGroup": "[parameters('resourceGroupName')]",
+                    "dependsOn": [
+                      "[resourceId('Microsoft.Resources/resourceGroups', parameters('resourceGroupName'))]"
+                    ],
+                    "properties": {
+                      "mode": "Incremental",
+                      "expressionEvaluationOptions": {
+                        "scope": "inner"
+                      },
+                      "template": {
+                        "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                        "contentVersion": "1.0.0.0",
+                        "parameters": {
+                          "resourceGroupName": {
+                            "type": "string"
+                          },
+                          "location": {
+                            "type": "string"
+                          }
+                        },
+                        "resources": [
+                          {
+                            "type": "Microsoft.Storage/storageAccounts",
+                            "apiVersion": "2022-09-01",
+                            "name": "[format('stor{0}', uniqueString(subscription().subscriptionId, parameters('resourceGroupName')))]",
+                            "location": "[parameters('location')]",
+                            "sku": {
+                              "name": "Standard_LRS"
+                            },
+                            "kind": "StorageV2",
+                            "properties": {}
+                          }
+                        ]
+                      },
+                      "parameters": {
+                        "location": {
+                          "value": "[parameters('location')]"
+                        },
+                        "resourceGroupName": {
+                          "value": "[parameters('resourceGroupName')]"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "versions": [
+      "1.0.0"
+    ]
+  },
+  "id": "/subscriptions/391c8a4e-5460-4de0-947c-c60eb3dd48ef/providers/Microsoft.Authorization/policyDefinitions/7f69f9a8-dbf2-4c73-8b62-f7f75e0a647f",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "7f69f9a8-dbf2-4c73-8b62-f7f75e0a647f",
+  "systemData": {
+    "createdBy": "adm-SChaudhari4@slb.com",
+    "createdByType": "User",
+    "createdAt": "2025-07-04T11:56:16.8418964Z",
+    "lastModifiedBy": "adm-SChaudhari4@slb.com",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2025-09-10T17:39:41.20399Z"
+  }
+}
