@@ -1,0 +1,108 @@
+{
+  "properties": {
+    "displayName": "Storage-Lifecycle-mgt-policy",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "metadata": {
+      "version": "1.0.0",
+      "createdBy": "9e2f9255-3d43-4bdd-86c5-351daef6cbe6",
+      "createdOn": "2025-07-05T11:42:02.6916297Z",
+      "updatedBy": null,
+      "updatedOn": null
+    },
+    "version": "1.0.0",
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Storage/storageAccounts"
+          },
+          {
+            "field": "id",
+            "contains": "/resourceGroups/RG-CSOC-LOGGING/"
+          }
+        ]
+      },
+      "then": {
+        "effect": "DeployIfNotExists",
+        "details": {
+          "type": "Microsoft.Storage/storageAccounts/managementPolicies",
+          "name": "default",
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/17d1049b-9a84-46fb-8f53-869881c3d3ab"
+          ],
+          "deployment": {
+            "properties": {
+              "mode": "incremental",
+              "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "storageAccountName": {
+                    "type": "string"
+                  }
+                },
+                "resources": [
+                  {
+                    "type": "Microsoft.Storage/storageAccounts/managementPolicies",
+                    "apiVersion": "2021-04-01",
+                    "name": "[concat(parameters('storageAccountName'), '/default')]",
+                    "properties": {
+                      "policy": {
+                        "rules": [
+                          {
+                            "name": "deleteAfter90Days",
+                            "enabled": true,
+                            "type": "Lifecycle",
+                            "definition": {
+                              "filters": {
+                                "blobTypes": [
+                                  "blockBlob"
+                                ],
+                                "prefixMatch": [
+                                  "logs/"
+                                ]
+                              },
+                              "actions": {
+                                "baseBlob": {
+                                  "delete": {
+                                    "daysAfterModificationGreaterThan": 90
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "parameters": {
+                "storageAccountName": {
+                  "value": "[field('name')]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "versions": [
+      "1.0.0"
+    ]
+  },
+  "id": "/subscriptions/391c8a4e-5460-4de0-947c-c60eb3dd48ef/providers/Microsoft.Authorization/policyDefinitions/b181fa8a-a14d-443f-a8ab-41920ec33b72",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "b181fa8a-a14d-443f-a8ab-41920ec33b72",
+  "systemData": {
+    "createdBy": "adm-SChaudhari4@slb.com",
+    "createdByType": "User",
+    "createdAt": "2025-07-05T11:42:02.6625298Z",
+    "lastModifiedBy": "adm-SChaudhari4@slb.com",
+    "lastModifiedByType": "User",
+    "lastModifiedAt": "2025-07-05T11:42:02.6625298Z"
+  }
+}
